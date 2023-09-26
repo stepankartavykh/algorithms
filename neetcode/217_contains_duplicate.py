@@ -1,7 +1,8 @@
 from typing import List
+import dis
 
 
-def test():
+def test_leetcode_cases():
     assert Solution().containsDuplicate([1,2,3,1]) == True
     assert Solution().containsDuplicate([1,2,3,4]) == False
     assert Solution().containsDuplicate([1,1,1,3,3,4,3,2,4,2]) == True
@@ -14,4 +15,4 @@ class Solution:
 
 
 if __name__ == '__main__':
-    test()
+    test_leetcode_cases()

@@ -9,5 +9,9 @@ def is_anagram(s: str, t: str) -> bool:
     return Counter(s) == Counter(t)
 
 
+def is_anagram_second_solution(s: str, t: str) -> bool:
+    pass
+
+
 if __name__ == '__main__':
     test_leet_code_cases(is_anagram)

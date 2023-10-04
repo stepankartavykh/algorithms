@@ -8,17 +8,15 @@ def test_leet_code_cases(solution_function):
 
 
 def is_valid_sudoku(board: List[List[str]]) -> bool:
+    row_set = set()
     for y, row in enumerate(board):
-        row_set = set()
         for x, current_cell in enumerate(row):
-            column_set = set()
-            if current_cell != '.':
-                if current_cell in row_set:
-                    return False
-                else:
-                    row_set.add(current_cell)
-            print(current_cell, end=' ')
-        print()
+            if current_cell != '.' and current_cell in row_set:
+                return False
+            else:
+                row_set.add(current_cell)
+        row_set.clear()
+    return True
 
 
 if __name__ == '__main__':

@@ -13,7 +13,16 @@ def remove_element(nums: List[int], val: int) -> int:
     return k
 
 
+def second_approach(nums: List[int], val: int) -> int:
+    i = 0
+    for x in nums:
+        if x != val:
+            nums[i] = x
+            i += 1
+    return i
+
+
 if __name__ == '__main__':
     a = [0, 1, 2, 2, 3, 0, 4, 2]
-    print(remove_element(a, 2))
+    print(second_approach(a, 2))
     print(a)

@@ -9,10 +9,9 @@ class TreeNode:
 
 
 def invert_tree(root: Optional[TreeNode]) -> Optional[TreeNode]:
-
-    left, right = root.left, root.right
-    left, right = root.left, root.right
-    if left is None and right is None:
-        return root
-    left_left, left_right = left.left, left.right
-    right_left, right_right = right.left, right.right
+    if not root:
+        return None
+    root.left, root.right = root.right, root.left
+    invert_tree(root.left)
+    invert_tree(root.right)
+    return root

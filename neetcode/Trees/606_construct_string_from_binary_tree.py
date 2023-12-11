@@ -9,16 +9,14 @@ def tree2str(root: Optional[TreeNode]) -> str:
 
     left = tree2str(root.left)
     right = tree2str(root.right)
-    if len(right):
-        if len(left):
-            return ''.join([str(root.val), '(', left, ')', '(', right, ')'])
-        else:
-            return ''.join([str(root.val), '()', '(', right, ')'])
+    if left and right:
+        return ''.join([str(root.val), '(', left, ')', '(', right, ')'])
+    elif not left and right:
+        return ''.join([str(root.val), '()', '(', right, ')'])
+    elif left and not right:
+        return ''.join([str(root.val), '(', left, ')'])
     else:
-        if len(left):
-            return ''.join([str(root.val), '(', left, ')'])
-        else:
-            return ''.join([str(root.val)])
+        return ''.join([str(root.val)])
 
 
 def tree2str_stack_solution(root: Optional[TreeNode]) -> str:

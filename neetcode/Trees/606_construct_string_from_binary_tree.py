@@ -19,6 +19,18 @@ def tree2str(root: Optional[TreeNode]) -> str:
         return ''.join([str(root.val)])
 
 
+def tree2str_second_variant(root: Optional[TreeNode]) -> str:
+    if not root:
+        return ''
+    elems = [str(root.val)]
+    left = tree2str_second_variant(root.left)
+    elems.append(f'({left})')
+    right = tree2str_second_variant(root.right)
+    if right:
+        elems.append(f'({right})')
+    return ''.join(elems)
+
+
 def tree2str_stack_solution(root: Optional[TreeNode]) -> str:
     current = root
     stack = []
@@ -40,4 +52,4 @@ if __name__ == "__main__":
         [1, None, 4],
     ]]
     for elem in trees:
-        print(tree2str(elem))
+        print(tree2str(elem), tree2str_second_variant(elem))

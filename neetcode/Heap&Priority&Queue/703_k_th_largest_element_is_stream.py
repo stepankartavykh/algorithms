@@ -1,4 +1,3 @@
-from collections import deque
 from typing import List
 import heapq
 
@@ -9,42 +8,22 @@ class KthLargest:
         self.heap = nums
         heapq.heapify(self.heap)
         while len(self.heap) > k:
-            pass
-        self.elements = sorted(nums, reverse=True)
+            heapq.heappop(self.heap)
 
     def add(self, val: int) -> int:
-        self.elements.append(val)
-        return sorted(self.elements, reverse=True)[self.k - 1]
-
-
-def test_heap():
-    heap = []
-
-    heapq.heappush(heap, 5)
-    heapq.heappush(heap, 2)
-    heapq.heappush(heap, 10)
-    heapq.heappush(heap, 7)
-    heapq.heappush(heap, 3)
-
-    print("Heap:", heap)
-
-    smallest = heapq.heappop(heap)
-    print("Smallest element:", smallest)
-    print("Heap after pop:", heap)
-
-    n_smallest = heapq.nsmallest(3, heap)
-    print("N smallest elements:", n_smallest)
-
-    data = [8, 1, 6, 4, 9]
-    heapq.heapify(data)
-    print("Heapified data:", data)
+        heapq.heappush(self.heap, val)
+        if len(self.heap) > self.k:
+            heapq.heappop(self.heap)
+        return self.heap[0]
 
 
 if __name__ == '__main__':
-    # kthLargest = KthLargest(3, [4, 5, 8, 2])
-    # print(kthLargest.add(3))
-    # print(kthLargest.add(5))
-    # print(kthLargest.add(10))
-    # print(kthLargest.add(9))
-    # print(kthLargest.add(4))
-    test_heap()
+    input_structures = [
+        ([[3, [4, 5, 8, 2]], [[3], [5], [10], [9], [4]]]),
+        ([[2, [0]], [[-1], [1], [-2], [-4], [3]]]),
+    ]
+    for struct in input_structures:
+        kth_struct = KthLargest(struct[0][0], struct[0][1])
+        for elem in struct[1]:
+            print(kth_struct.add(elem[0]), end=' ')
+        print()

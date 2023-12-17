@@ -1,0 +1,28 @@
+from typing import List, Optional
+
+
+class ListNode:
+    def __init__(self, val=0, next_=None):
+        self.val = val
+        self.next = next_
+
+
+def print_linked_list(node):
+    if node is None:
+        return
+    print(node.val)
+    print_linked_list(node.next)
+
+
+def create_linked_list_structure(values: List[int]) -> Optional[ListNode]:
+    if not values:
+        return None
+
+    head = ListNode()
+    current = head
+    for index in range(len(values) - 1):
+        current.val = values[index]
+        current.next = ListNode()
+        current = current.next
+    current.val = values[-1]
+    return head

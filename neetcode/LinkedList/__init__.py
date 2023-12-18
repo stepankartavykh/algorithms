@@ -8,10 +8,12 @@ class ListNode:
 
 
 def print_linked_list(node):
-    if node is None:
-        return
-    print(node.val)
-    print_linked_list(node.next)
+    result = []
+    current = node
+    while current:
+        result.append(current.val)
+        current = current.next
+    return result
 
 
 def create_linked_list_structure(values: List[int]) -> Optional[ListNode]:

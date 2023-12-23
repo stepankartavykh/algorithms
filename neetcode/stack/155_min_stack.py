@@ -1,46 +1,50 @@
-import collections
-
-
 class MinStack:
 
     def __init__(self):
-        self.elements = collections.deque()
-        self.min_position = None
+        self.elements = []
+        self.top_ = None
+        self.min_value = None
 
     def push(self, val: int) -> None:
-        self.elements.append(val)
-        if self.min:
-            if val < self.elements[self.min_position]:
-                self.min_position = len(self.elements)
+        if self.min_value is None:
+            self.elements.append((val, val))
+            self.top_ = (val, val)
+            self.min_value = val
+        else:
+            self.min_value = min(val, self.min_value)
+            self.top_ = (val, self.min_value)
+            self.elements.append(self.top_)
 
     def pop(self) -> None:
-        if self.min_position == len(self.elements):
-            self.elements.pop()
-            for elem in self.elements:
-                if
+        self.elements.pop()
+        if len(self.elements):
+            self.top_ = self.elements[-1]
+            self.min_value = self.top_[1]
         else:
-            self.elements.pop()
+            self.elements = []
+            self.top_ = None
+            self.min_value = None
 
     def top(self) -> int:
-        return self.elements[-1]
+        return self.top_[0]
 
     def getMin(self) -> int:
-        return self.elements
+        return self.min_value
 
 
 if __name__ == '__main__':
-    minStack = MinStack()
-    minStack.push(-2)
-    print(minStack.elements, minStack.min)
-    minStack.push(0)
-    print(minStack.elements, minStack.min)
-    minStack.push(-3)
-    print(minStack.elements, minStack.min)
-    minStack.getMin()
-    print(minStack.elements, minStack.min)
-    minStack.pop()
-    print(minStack.elements, minStack.min)
-    minStack.top()
-    print(minStack.elements, minStack.min)
-    minStack.getMin()
-    print(minStack.elements, minStack.min)
+    inputs = [
+        (["push", "push", "push"], [0, 1, 0]),
+        (["push", "push", "push", "getMin", "pop", "top", "getMin"], [-2, 0, -3, None, None, None, None]),
+        (["push", "push", "push", "getMin", "pop", "getMin"], [0, 1, 0, None, None, None]),
+    ]
+    for input_ in inputs:
+        stack = MinStack()
+        values = input_[1]
+        for index, operation in enumerate(input_[0]):
+            func = getattr(stack, operation)
+            value = values[index]
+            if operation == 'push':
+                print(func(value), stack.elements)
+            else:
+                print(func(), stack.elements)

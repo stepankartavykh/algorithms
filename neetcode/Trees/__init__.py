@@ -25,3 +25,12 @@ def create_binary_tree_structure(values: List[int]) -> Optional[TreeNode]:
             node.right = TreeNode(val)
             q.append(node.right)
     return root
+
+
+def print_binary_tree_structure(root: Optional[TreeNode], level=0) -> None:
+    if root is None:
+        return
+
+    print_binary_tree_structure(root.right, level + 1)
+    print('  ' * level + str(root.val))
+    print_binary_tree_structure(root.left, level + 1)

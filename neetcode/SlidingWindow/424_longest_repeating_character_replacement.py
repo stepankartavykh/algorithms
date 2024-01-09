@@ -1,49 +1,29 @@
+from string import ascii_uppercase
 
 
 def character_replacement(s: str, k: int) -> int:
-    """
-    s = 'AAEEAAABBBAACDDDED'
-    distribution_letters = {
-        'A': {
-            0: 2,
-            4: 3,
-            10: 2,
-        },
-        'E': {
-            2: 2,
-            16: 1,
-        }
-        'B': {
-            7: 3,
-        }
-        'C': {
-            12: 1,
-        }
-        'D': {
-            13: 3,
-            17: 1
-        }
-    }
-    """
-    """
-    s = 'AAEEAAABBBAACDDDED'
-    
-    distr = {
-        (0, A): 2,
-        (2, E): 2,
-        (4, A): 3,
-        (7, B): 3,
-        (10, A): 2,
-        (12, C): 1,
-        (13, D): 3,
-        (16, E): 1,
-        (17, D): 1,
-    }
-    """
+    d = {}
+    for letter in ascii_uppercase:
+        d[letter] = 0
 
-    distr = {}
-    string_alphabet = set()
-    repeating_letters = set()
-    counter = 0
-    for position in range(len(s)):
-        pass
+    left, right = 0, 0
+    result = 0
+    while right < len(s):
+
+        d[s[right]] += 1
+        window_length = right - left + 1
+        most_common_count = max(d.values())
+        if window_length - most_common_count <= k:
+            result = window_length
+        else:
+            d[s[left]] -= 1
+            left += 1
+
+        right += 1
+
+    return result
+
+
+if __name__ == '__main__':
+    print(character_replacement(s="ABAB", k=2))
+    print(character_replacement(s="AABABBA", k=1))

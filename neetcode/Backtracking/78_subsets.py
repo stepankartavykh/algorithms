@@ -2,22 +2,29 @@ from typing import List
 
 
 def subsets(nums: List[int]) -> List[List[int]]:
-    result = [[]]
+    # TODO time complexity - O(n * 2^n)?
+    result = []
+    subset = []
 
-    def find_solutions(input_nums):
-        if input_nums not in result:
-            result.append(input_nums)
-        else:
+    def find_solutions(index):
+        if index >= len(nums):
+            result.append(subset.copy())
             return
+        subset.append(nums[index])
+        find_solutions(index + 1)
+        subset.pop()
+        find_solutions(index + 1)
 
-        for i in range(len(input_nums)):
-            for j in range(i, len(input_nums)):
-                find_solutions(nums[i:j])
-
-    find_solutions(nums)
+    find_solutions(0)
 
     return result
 
 
 if __name__ == '__main__':
-    print(subsets([1, 2, 3]))
+    inputs = [
+        [0],
+        [2, 3],
+        [1, 2, 3],
+    ]
+    for input_ in inputs:
+        print(subsets(input_))

@@ -1,5 +1,5 @@
 class MyHashSet:
-
+    #  TODO binary search must be implemented
     def __init__(self):
         self.elements = []
 

@@ -6,6 +6,9 @@ class ListNode:
         self.val = val
         self.next = next_
 
+    def __repr__(self):
+        return '<ListNode(val={val})>'.format(val=self.val)
+
 
 def print_linked_list(node):
     result = []

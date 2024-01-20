@@ -3,7 +3,7 @@ from typing import Optional
 from neetcode.LinkedList import ListNode, create_linked_list_structure, print_linked_list
 
 
-def reorder_list(head: Optional[ListNode]) -> None:
+def reorder_list(head: Optional[ListNode]):
     slow, fast = head, head.next
 
     while fast and fast.next:
@@ -19,19 +19,25 @@ def reorder_list(head: Optional[ListNode]) -> None:
         current.next = second_part_reversed
         second_part_reversed = current
         current = var
-    current = head
-    current_first = head
-    current_second = second_part_reversed
-    while current_first and current_second:
-        current.next = current_first.next
-        current.next.next = current_first
+
+    current_first, current_second = head, second_part_reversed
+
+    while current_second:
+        first_next, second_next = current_first.next, current_second.next
+        current_first.next = current_second
+        current_second.next = first_next
+        current_first, current_second = first_next, second_next
+
+    return head
 
 
 if __name__ == '__main__':
     inputs = [
-        # [1, 2, 3],
+        [1],
+        [1, 12],
+        [1, 2, 3],
         [1, 2, 3, 4],
-        # [1, 2, 3, 4, 5],
+        [1, 2, 3, 4, 5],
     ]
     for input_ in inputs:
         print(print_linked_list(reorder_list(create_linked_list_structure(input_))))

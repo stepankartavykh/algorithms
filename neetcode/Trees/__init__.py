@@ -7,6 +7,9 @@ class TreeNode:
         self.left = left
         self.right = right
 
+    def __repr__(self):
+        return f'TreeNode(val={self.val})'
+
 
 def create_binary_tree_structure(values: List[int]) -> Optional[TreeNode]:
     if not values:

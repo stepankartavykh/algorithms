@@ -6,6 +6,7 @@ from neetcode import TreeNode, create_binary_tree_structure
 
 def k_th_smallest(root: Optional[TreeNode], k: int) -> int:
     # TODO may be is there a batter way? It's not readable.
+    # TODO nonlocal keyword - what is that? Dive into it.
     counter = 0
     result = 10 ** 4
 

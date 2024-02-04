@@ -7,7 +7,10 @@ def build_tree(preorder: list[int], inorder: list[int]) -> Optional[TreeNode]:
     # TODO preorder - node.val + traversal(left) + traversal(right)
     # TODO inorder - traversal(left) + node.val + traversal(right)
 
-    return TreeNode(val=-1)
+    root = TreeNode(val=preorder[0])
+
+
+    return root
 
 
 if __name__ == '__main__':

@@ -28,6 +28,29 @@ def deleteNode(root: TreeNode | None, key: int) -> TreeNode | None:
     return root
 
 
+def delete_node_second(root: TreeNode | None, key: int) -> TreeNode | None:
+    if not root:
+        return root
+
+    if key < root.val:
+        root.left = delete_node_second(root.left, key)
+        return root
+
+    if key > root.val:
+        root.right = delete_node_second(root.right, key)
+        return root
+
+    if not root.right:
+        return root.left
+
+    current = root.right
+    while current.left:
+        current = current.left
+
+    current.left = root.left
+    return root.right
+
+
 def deleteNode_iterative(root: TreeNode | None, key: int) -> TreeNode | None:
     stack = deque([root])
 

@@ -53,6 +53,29 @@ def bruteforce(s: str) -> int:
     return len(ways)
 
 
+def num_decodings_dp_second(s: str) -> int:
+    if s[0] == '0':
+        return 0
+
+    first = 1
+    second = 1
+
+    for i in range(1, len(s)):
+        current = 0
+
+        if s[i] != '0':
+            current += first
+
+        two_digit = int(s[i - 1:i + 1])
+        if 10 <= two_digit <= 26:
+            current += second
+
+        second = first
+        first = current
+
+    return first
+
+
 if __name__ == '__main__':
     print(num_decodings_dp('111111111111111111111111111111111111111111111'))
     print(num_decodings_dp('1'))

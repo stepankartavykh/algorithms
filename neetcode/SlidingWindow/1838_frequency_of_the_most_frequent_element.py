@@ -3,18 +3,20 @@ from typing import List
 
 def max_frequency(nums: List[int], k: int) -> int:
     nums.sort()
-    left, right = 0, 0
+    l, r = 0, 0
     max_freq = 0
-    while right < len(nums):
-        max_value = max(nums[left:right + 1])
-        required_k = sum(max_value - i for i in nums[left:right + 1])
-        if required_k <= k:
-            max_freq = max(max_freq, right - left + 1)
-        else:
-            left += 1
-
-        right += 1
-
+    total = 0
+    while r < len(nums):
+        total += nums[r]
+        # condition on "invalid" window
+        # 1) nums[r] * (r - l + 1) - possible sum of elements in window - max element of window * length of window
+        # 2) total (real sum of current window) + count of 1 that we can add to elements in window
+        # if 1) > 2) so that means we need to subtract window to get maximum possible count of elements
+        while nums[r] * (r - l + 1) > total + k:
+            total -= nums[l]
+            l += 1
+        max_freq = max(max_freq, r - l + 1)
+        r += 1
     return max_freq
 
 

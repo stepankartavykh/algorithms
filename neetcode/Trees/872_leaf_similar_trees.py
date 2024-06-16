@@ -1,6 +1,18 @@
 from neetcode import TreeNode, create_binary_tree_structure
 
 
+class SecondSolution:
+    def leaf_similar(self, root1: TreeNode | None, root2: TreeNode | None) -> bool:
+        return self.leaf_values(root1) == self.leaf_values(root2)
+
+    def leaf_values(self, root: TreeNode | None) -> list[int]:
+        if root is None:
+            return []
+        if root.left is None and root.right is None:
+            return [root.val]
+        return self.leaf_values(root.left) + self.leaf_values(root.right)
+
+
 class Solution:
     @staticmethod
     def get_lowest_values(root: TreeNode | None) -> list[int]:

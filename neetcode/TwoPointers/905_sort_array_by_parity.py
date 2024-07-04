@@ -1,8 +1,4 @@
-import dis
-import cProfile
-import random
-import time
-from typing import Callable
+from tests.TestClient import TestClient, SpecificInterface
 
 
 def sort_array_by_parity(nums: list[int]) -> list[int]:
@@ -19,13 +15,6 @@ def sort_array_by_parity_second_solution(nums: list[int]) -> list[int]:
     return even + odd
 
 
-def get_profiling_data(func: Callable):
-    with cProfile.Profile() as profiler:
-        func([random.randint(1, 100) for _ in range(1000)])
-        profiler.dump_stats(f'/home/skartavykh/MyProjects/leetcode/tests/stats/{func.__name__}{time.time_ns()}.txt')
-
-
 if __name__ == '__main__':
-    print(dis.dis(sort_array_by_parity_second_solution))
-    print('====================================')
-    print(dis.dis(sort_array_by_parity))
+    test_client = TestClient([sort_array_by_parity, sort_array_by_parity_second_solution], SpecificInterface(list[int]))
+    test_client.run()

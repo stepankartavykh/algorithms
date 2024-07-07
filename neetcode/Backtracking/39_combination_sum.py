@@ -1,52 +1,36 @@
-from typing import List
+def combination_sum(candidates: list[int], target: int) -> list[list[int]]:
+    res = []
 
-
-def combination_sum(candidates: List[int], target: int) -> List[List[int]]:
-    result = []
-    subset = []
-
-    def find_solutions(index):
-        if index >= len(candidates):
-            if sum(subset) == target:
-                result.append(subset.copy())
+    def dfs(i: int, cur: list[int], total: int) -> None:
+        if total == target:
+            res.append(cur.copy())
             return
-        current_val = candidates[index]
-        current_subset = subset.copy()
+        if i >= len(candidates) or total > target:
+            return
 
-        while sum(subset) < target:
-            subset.append(current_val)
-            find_solutions(index + 1)
+        cur.append(candidates[i])
+        dfs(i, cur, total + candidates[i])
+        cur.pop()
+        dfs(i + 1, cur, total)
 
-        find_solutions(index + 1)
-
-        subset.pop()
-
-        find_solutions(index + 1)
+    dfs(0, [], 0)
+    return res
 
 
-    find_solutions(0)
-
-    return result
-
-
-def combinationSum(candidates: List[int], target: int) -> List[List[int]]:
+def combination_sum_with_sorting(candidates: list[int], target: int) -> list[list[int]]:
     candidates.sort()
 
     result = []
 
-    def backtrack(remaining_target, current_combination, start_index):
+    def backtrack(remaining_target: int, current_combination: list[int], start_index: int) -> None:
         if remaining_target == 0:
             result.append(list(current_combination))
             return
-
         for i in range(start_index, len(candidates)):
             if candidates[i] > remaining_target:
                 break
-
             current_combination.append(candidates[i])
-
             backtrack(remaining_target - candidates[i], current_combination, i)
-
             current_combination.pop()
 
     backtrack(target, [], 0)
@@ -57,8 +41,7 @@ def combinationSum(candidates: List[int], target: int) -> List[List[int]]:
 if __name__ == '__main__':
     inputs = [
         ([2, 3, 6, 7], 7),
-        # ([2, 3, 5], 8),
+        ([2, 3, 5], 8),
     ]
     for input_ in inputs:
-        # print(combination_sum(input_[0], input_[1]))
-        print(combinationSum(input_[0], input_[1]))
+        print(combination_sum_with_sorting(input_[0], input_[1]))

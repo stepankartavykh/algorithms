@@ -74,7 +74,11 @@ def watcher(function: Callable):
             _validate_input_data(input_types, args[0])
         except ValidationError as valid_error:
             print(valid_error)
+        # TODO - The question is how to extract valuable info using package 'resource'?
+        usage_object_before = getrusage(RUSAGE_SELF)
+        print(usage_object_before)
         result = function(*args, **kwargs)
+        usage_object_after = getrusage(RUSAGE_SELF)
         print('end collecting info...')
         return result
 

@@ -1,2 +1,2 @@
 # Algorithms
-Learning algirthms and data structures
+Learning algorithms and data structures

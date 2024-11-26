@@ -46,9 +46,9 @@ class SeatManager:
 
 
 if __name__ == '__main__':
-    # import psutil
+    import psutil
 
-    # process = psutil.Process()
+    process = psutil.Process()
     # while True:
     #     print(process.memory_info())
     # st = time.perf_counter()

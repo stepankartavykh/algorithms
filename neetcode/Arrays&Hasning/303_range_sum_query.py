@@ -4,18 +4,12 @@ from typing import List
 class NumArray:
 
     def __init__(self, nums: List[int]):
-        # TODO must be O(n). n^2 right now!
-        d = {}
-        for i in range(len(nums)):
-            d[i] = sum(nums[:i+1])
-        self.sums = d
+        self.prefix_sums = [0]
+        for num in nums:
+            self.prefix_sums.append(self.prefix_sums[-1] + num)
 
     def sum_range(self, left: int, right: int) -> int:
-        # TODO delete if statement by rewriting constructor
-        if left > 0:
-            return self.sums[right] - self.sums[left - 1]
-        else:
-            return self.sums[right]
+        return self.prefix_sums[right + 1] - self.prefix_sums[left]
 
 
 if __name__ == '__main__':

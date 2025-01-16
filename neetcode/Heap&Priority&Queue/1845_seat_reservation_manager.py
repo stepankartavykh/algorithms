@@ -3,7 +3,6 @@ import time
 from types import ModuleType, FunctionType
 from gc import get_referents
 
-from memory_profiler import profile
 
 BLACKLIST = type, ModuleType, FunctionType
 
@@ -25,39 +24,42 @@ def getsize(obj):
         objects = get_referents(*need_referents)
     return size
 
-@profile
+"""
+Design a system that manages the reservation state of n seats that are numbered from 1 to n.
+Initializes a SeatManager object that will manage n seats numbered from 1 to n. All seats are initially available.
+int reserve() Fetches the smallest-numbered unreserved seat, reserves it, and returns its number.
+void unreserve(int seatNumber) Unreserves the seat with the given seatNumber.
+"""
+
+
+
 class SeatManager:
 
     def __init__(self, n: int):
-        self.seats = [(False, i) for i in range(0, n)]
+        self.count = n
+        self.seats = {
+            i: False
+            for i in range(1, n + 1)
+        }
+        self.last_free = 1
 
-    @profile
     def reserve(self) -> int:
-        reserved_seat = None
-        for i, seat in enumerate(self.seats):
-            if seat[0] is False:
-                reserved_seat = seat[1] + 1
-                self.seats[i] = (True, i)
+        self.seats[self.last_free] = True
+        number_to_return = self.last_free
+        for i in range(self.last_free, self.count + 1):
+            if self.seats[i] is False:
+                self.last_free = i
                 break
-        return reserved_seat
+        return number_to_return
 
     def unreserve(self, seat_number: int) -> None:
-        self.seats[seat_number - 1] = (False, seat_number - 1)
+        if seat_number < self.last_free:
+            self.last_free = seat_number
+        self.seats[seat_number] = False
 
 
 if __name__ == '__main__':
-    import psutil
-
-    process = psutil.Process()
-    # while True:
-    #     print(process.memory_info())
-    # st = time.perf_counter()
-    manager = SeatManager(10000000)
-    # print(time.perf_counter() - st)
-    # print(sys.getsizeof(manager))
-    # manager_size = getsize(manager) / 1024 / 1024
-    # print(manager_size)
-
+    manager = SeatManager(5)
     print(manager.reserve())
     print(manager.reserve())
     print(manager.unreserve(2))
@@ -66,3 +68,15 @@ if __name__ == '__main__':
     print(manager.reserve())
     print(manager.reserve())
     print(manager.unreserve(5))
+
+    manager_second = SeatManager(2)
+    print(manager_second.reserve())
+    print(manager_second.unreserve(1))
+    print(manager_second.reserve())
+    print(manager_second.reserve())
+    print(manager_second.unreserve(2))
+    print(manager_second.reserve())
+    print(manager_second.unreserve(1))
+    print(manager_second.reserve())
+    print(manager_second.unreserve(2))
+    print(manager_second.reserve())

@@ -4,27 +4,22 @@ from neetcode.Trees import TreeNode, create_binary_tree_structure
 
 def sumOfLeftLeaves(root: TreeNode | None) -> int:
 
-    start_node = root
+    res = 0
 
-    def traverse(node, is_left_branch):
+    def traverse(node):
+        nonlocal res
+
         if not node:
-            return 0
-        if not node.left and not node.right:
-            if node is start_node:
-                print(node.val)
-                return 0
-            if not is_left_branch:
-                print(node.val)
-                return 0
-            print(node.val)
-            return node.val
-        # if not node.left:
-        #     return traverse(node.right, False)
-        # if not root.right:
-        #     return traverse(node.left, True)
-        return traverse(node.left, True) + traverse(node.right, False)
-
-    return traverse(root, False)
+            return
+        if node.left and not node.left.left and not node.left.right:
+            res += node.left.val
+        
+        traverse(node.left)
+        traverse(node.right)
+        
+    traverse(root)
+    
+    return res
 
 
 if __name__ == '__main__':
